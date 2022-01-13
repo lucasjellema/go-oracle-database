@@ -12,7 +12,7 @@ import (
 	_ "github.com/sijms/go-ora/v2"
 )
 
-func main() {
+func main5() {
 	fmt.Println("Local Database, simple connect string ")
 	doDBThings(localDB)
 	fmt.Println("Autonomous based on wallet is next ")
@@ -39,14 +39,6 @@ func doDBThings(dbParams map[string]string) {
 	if err != nil {
 		panic(fmt.Errorf("error pinging db: %w", err))
 	}
-
-	var queryResultColumnOne string
-	row := db.QueryRow("SELECT systimestamp FROM dual")
-	err = row.Scan(&queryResultColumnOne)
-	if err != nil {
-		panic(fmt.Errorf("error scanning db: %w", err))
-	}
-	fmt.Println("The time in the database ", queryResultColumnOne)
 
 	someAdditionalActions(db)
 }

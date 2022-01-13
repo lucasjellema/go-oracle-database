@@ -37,7 +37,15 @@ const dropTableStatement = "DROP TABLE TEMP_TABLE PURGE"
 const insertStatement = "INSERT INTO TEMP_TABLE ( NAME , VALUE) VALUES (:name, :value)"
 
 func someAdditionalActions(db *sql.DB) {
-	_, err := db.Exec(createTableStatement)
+
+	var queryResultColumnOne string
+	row := db.QueryRow("SELECT systimestamp FROM dual")
+	err := row.Scan(&queryResultColumnOne)
+	if err != nil {
+		panic(fmt.Errorf("error scanning db: %w", err))
+	}
+	fmt.Println("The time in the database ", queryResultColumnOne)
+	_, err = db.Exec(createTableStatement)
 	handleError("create table", err)
 	defer db.Exec(dropTableStatement)
 	stmt, err := db.Prepare(insertStatement)
@@ -50,7 +58,7 @@ func someAdditionalActions(db *sql.DB) {
 	var queryResultName string
 	var queryResultTimestamp string
 	var queryResultValue int32
-	row := db.QueryRow("SELECT name, creation_time, value FROM temp_table")
+	row = db.QueryRow("SELECT name, creation_time, value FROM temp_table")
 	err = row.Scan(&queryResultName, &queryResultTimestamp, &queryResultValue)
 	handleError("query single row", err)
 	if err != nil {
