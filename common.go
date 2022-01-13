@@ -16,6 +16,15 @@ var localDB = map[string]string{
 	"password": "demo",
 }
 
+var autonomousDB = map[string]string{
+	"service":        "k8j2fvxbaujdcfy_daprdb_low.adb.oraclecloud.com",
+	"username":       "demo",
+	"server":         "adb.us-ashburn-1.oraclecloud.com",
+	"port":           "1522",
+	"password":       "Modem123mode",
+	"walletLocation": "/home/lucas/dapr-work/components-contrib/state/oracledatabase/Wallet_daprDB/",
+}
+
 func handleError(msg string, err error) {
 	if err != nil {
 		fmt.Println(msg, err)
