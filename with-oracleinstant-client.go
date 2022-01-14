@@ -7,13 +7,6 @@ import (
 	_ "github.com/godror/godror"
 )
 
-func main() {
-	fmt.Println("Local Database, simple connect string ")
-	doDBThingsThroughInstantClient(localDB)
-	fmt.Println("Autonomous based on wallet is next ")
-	doDBThingsThroughInstantClient(autonomousDB)
-}
-
 func doDBThingsThroughInstantClient(dbParams map[string]string) {
 	var db *sql.DB
 	var err error

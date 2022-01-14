@@ -12,13 +12,6 @@ import (
 	_ "github.com/sijms/go-ora/v2"
 )
 
-func main5() {
-	fmt.Println("Local Database, simple connect string ")
-	doDBThings(localDB)
-	fmt.Println("Autonomous based on wallet is next ")
-	doDBThings(autonomousDB)
-}
-
 func doDBThings(dbParams map[string]string) {
 	connectionString := "oracle://" + dbParams["username"] + ":" + dbParams["password"] + "@" + dbParams["server"] + ":" + dbParams["port"] + "/" + dbParams["service"]
 	if val, ok := dbParams["walletLocation"]; ok && val != "" {

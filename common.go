@@ -4,8 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-
-	_ "github.com/sijms/go-ora/v2"
+	"time"
 )
 
 var localDB = map[string]string{
@@ -23,6 +22,28 @@ var autonomousDB = map[string]string{
 	"port":           "1522",
 	"password":       "Modem123mode",
 	"walletLocation": "/home/lucas/dapr-work/components-contrib/state/oracledatabase/Wallet_daprDB/",
+}
+
+func main() {
+	fmt.Println("*** Using only go_ora package (no additional client software)")
+	fmt.Println("Local Database, simple connect string ")
+	t := time.Now()
+	doDBThings(localDB)
+	fmt.Println("Time Elapsed", time.Now().Sub(t).Milliseconds())
+	fmt.Println("Autonomous based on wallet is next ")
+	t = time.Now()
+	doDBThings(autonomousDB)
+	fmt.Println("Time Elapsed", time.Now().Sub(t).Milliseconds())
+
+	fmt.Println("*** Using Instant Client & GoDrOr package")
+	fmt.Println("Local Database, simple connect string ")
+	t = time.Now()
+	doDBThingsThroughInstantClient(localDB)
+	fmt.Println("Time Elapsed", time.Now().Sub(t).Milliseconds())
+	fmt.Println("Autonomous based on wallet is next ")
+	t = time.Now()
+	doDBThingsThroughInstantClient(autonomousDB)
+	fmt.Println("Time Elapsed", time.Now().Sub(t).Milliseconds())
 }
 
 func handleError(msg string, err error) {
